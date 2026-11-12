@@ -1,0 +1,10 @@
+{
+  "base_per_day": 30,
+  "min_age": 0,
+  "max_age": 80,
+  "age_bands": [
+    {"below": 18, "factor": 0.8},
+    {"below": 65, "factor": 1.0},
+    {"below": 81, "factor": 1.5}
+  ]
+}
