@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["no", "holder", "age", "days", "premium", "currency", "status", "created_at"],
+  "additionalProperties": false,
+  "properties": {
+    "no":         {"type": "string", "pattern": "^TP[0-9]{6}$"},
+    "holder":     {"type": "string", "minLength": 1},
+    "age":        {"type": "integer", "minimum": 0, "maximum": 80},
+    "days":       {"type": "integer", "minimum": 1},
+    "premium":    {"type": "integer", "minimum": 0},
+    "currency":   {"enum": ["TWD"]},
+    "status":     {"enum": ["active", "cancelled"]},
+    "created_at": {"type": "string"}
+  }
+}

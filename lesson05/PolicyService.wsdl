@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:s="http://www.w3.org/2001/XMLSchema"
+                  xmlns:tns="http://example.test/policy/"
+                  targetNamespace="http://example.test/policy/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://example.test/policy/">
+      <s:complexType name="Quote">
+        <s:sequence>
+          <s:element name="Premium" type="s:decimal"/>
+          <s:element name="Currency" type="s:string" minOccurs="0"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Policy">
+        <s:sequence>
+          <s:element name="PolicyNo" type="s:string" minOccurs="0"/>
+          <s:element name="Holder" type="s:string" minOccurs="0"/>
+          <s:element name="Age" type="s:int"/>
+          <s:element name="Days" type="s:int"/>
+          <s:element name="Premium" type="s:decimal"/>
+          <s:element name="Currency" type="s:string" minOccurs="0"/>
+          <s:element name="Status" type="s:string" minOccurs="0"/>
+          <s:element name="CreatedAt" type="s:dateTime"/>
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfPolicy">
+        <s:sequence>
+          <s:element name="Policy" type="tns:Policy" minOccurs="0" maxOccurs="unbounded"/>
+        </s:sequence>
+      </s:complexType>
+
+      <s:element name="AuthHeader">
+        <s:complexType><s:sequence>
+          <s:element name="Token" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="GetQuote">
+        <s:complexType><s:sequence>
+          <s:element name="age" type="s:int"/>
+          <s:element name="days" type="s:int"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="GetQuoteResponse">
+        <s:complexType><s:sequence>
+          <s:element name="GetQuoteResult" type="tns:Quote" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="Login">
+        <s:complexType><s:sequence>
+          <s:element name="username" type="s:string" minOccurs="0"/>
+          <s:element name="password" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="LoginResponse">
+        <s:complexType><s:sequence>
+          <s:element name="LoginResult" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="CreatePolicy">
+        <s:complexType><s:sequence>
+          <s:element name="holder" type="s:string" minOccurs="0"/>
+          <s:element name="age" type="s:int"/>
+          <s:element name="days" type="s:int"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="CreatePolicyResponse">
+        <s:complexType><s:sequence>
+          <s:element name="CreatePolicyResult" type="tns:Policy" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="GetPolicy">
+        <s:complexType><s:sequence>
+          <s:element name="policyNo" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="GetPolicyResponse">
+        <s:complexType><s:sequence>
+          <s:element name="GetPolicyResult" type="tns:Policy" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="SearchPolicies">
+        <s:complexType><s:sequence>
+          <s:element name="holder" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="SearchPoliciesResponse">
+        <s:complexType><s:sequence>
+          <s:element name="SearchPoliciesResult" type="tns:ArrayOfPolicy" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+
+      <s:element name="CancelPolicy">
+        <s:complexType><s:sequence>
+          <s:element name="policyNo" type="s:string" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+      <s:element name="CancelPolicyResponse">
+        <s:complexType><s:sequence>
+          <s:element name="CancelPolicyResult" type="tns:Policy" minOccurs="0"/>
+        </s:sequence></s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+
+  <wsdl:message name="AuthHeaderMsg"><wsdl:part name="AuthHeader" element="tns:AuthHeader"/></wsdl:message>
+  <wsdl:message name="GetQuoteSoapIn"><wsdl:part name="parameters" element="tns:GetQuote"/></wsdl:message>
+  <wsdl:message name="GetQuoteSoapOut"><wsdl:part name="parameters" element="tns:GetQuoteResponse"/></wsdl:message>
+  <wsdl:message name="LoginSoapIn"><wsdl:part name="parameters" element="tns:Login"/></wsdl:message>
+  <wsdl:message name="LoginSoapOut"><wsdl:part name="parameters" element="tns:LoginResponse"/></wsdl:message>
+  <wsdl:message name="CreatePolicySoapIn"><wsdl:part name="parameters" element="tns:CreatePolicy"/></wsdl:message>
+  <wsdl:message name="CreatePolicySoapOut"><wsdl:part name="parameters" element="tns:CreatePolicyResponse"/></wsdl:message>
+  <wsdl:message name="GetPolicySoapIn"><wsdl:part name="parameters" element="tns:GetPolicy"/></wsdl:message>
+  <wsdl:message name="GetPolicySoapOut"><wsdl:part name="parameters" element="tns:GetPolicyResponse"/></wsdl:message>
+  <wsdl:message name="SearchPoliciesSoapIn"><wsdl:part name="parameters" element="tns:SearchPolicies"/></wsdl:message>
+  <wsdl:message name="SearchPoliciesSoapOut"><wsdl:part name="parameters" element="tns:SearchPoliciesResponse"/></wsdl:message>
+  <wsdl:message name="CancelPolicySoapIn"><wsdl:part name="parameters" element="tns:CancelPolicy"/></wsdl:message>
+  <wsdl:message name="CancelPolicySoapOut"><wsdl:part name="parameters" element="tns:CancelPolicyResponse"/></wsdl:message>
+
+  <wsdl:portType name="PolicyServiceSoap">
+    <wsdl:operation name="GetQuote"><wsdl:input message="tns:GetQuoteSoapIn"/><wsdl:output message="tns:GetQuoteSoapOut"/></wsdl:operation>
+    <wsdl:operation name="Login"><wsdl:input message="tns:LoginSoapIn"/><wsdl:output message="tns:LoginSoapOut"/></wsdl:operation>
+    <wsdl:operation name="CreatePolicy"><wsdl:input message="tns:CreatePolicySoapIn"/><wsdl:output message="tns:CreatePolicySoapOut"/></wsdl:operation>
+    <wsdl:operation name="GetPolicy"><wsdl:input message="tns:GetPolicySoapIn"/><wsdl:output message="tns:GetPolicySoapOut"/></wsdl:operation>
+    <wsdl:operation name="SearchPolicies"><wsdl:input message="tns:SearchPoliciesSoapIn"/><wsdl:output message="tns:SearchPoliciesSoapOut"/></wsdl:operation>
+    <wsdl:operation name="CancelPolicy"><wsdl:input message="tns:CancelPolicySoapIn"/><wsdl:output message="tns:CancelPolicySoapOut"/></wsdl:operation>
+  </wsdl:portType>
+
+  <wsdl:binding name="PolicyServiceSoap" type="tns:PolicyServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetQuote">
+      <soap:operation soapAction="http://example.test/policy/GetQuote" style="document"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Login">
+      <soap:operation soapAction="http://example.test/policy/Login" style="document"/>
+      <wsdl:input><soap:body use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreatePolicy">
+      <soap:operation soapAction="http://example.test/policy/CreatePolicy" style="document"/>
+      <wsdl:input><soap:body use="literal"/><soap:header message="tns:AuthHeaderMsg" part="AuthHeader" use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPolicy">
+      <soap:operation soapAction="http://example.test/policy/GetPolicy" style="document"/>
+      <wsdl:input><soap:body use="literal"/><soap:header message="tns:AuthHeaderMsg" part="AuthHeader" use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SearchPolicies">
+      <soap:operation soapAction="http://example.test/policy/SearchPolicies" style="document"/>
+      <wsdl:input><soap:body use="literal"/><soap:header message="tns:AuthHeaderMsg" part="AuthHeader" use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelPolicy">
+      <soap:operation soapAction="http://example.test/policy/CancelPolicy" style="document"/>
+      <wsdl:input><soap:body use="literal"/><soap:header message="tns:AuthHeaderMsg" part="AuthHeader" use="literal"/></wsdl:input>
+      <wsdl:output><soap:body use="literal"/></wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <wsdl:service name="PolicyService">
+    <wsdl:port name="PolicyServiceSoap" binding="tns:PolicyServiceSoap">
+      <soap:address location="__LOCATION__"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

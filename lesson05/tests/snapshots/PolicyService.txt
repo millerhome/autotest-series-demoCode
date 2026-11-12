@@ -1,0 +1,20 @@
+operation CancelPolicy(policyNo: xsd:string, _soapheaders={AuthHeader: ns0:AuthHeader}) -> CancelPolicyResult: ns0:Policy
+operation CreatePolicy(holder: xsd:string, age: xsd:int, days: xsd:int, _soapheaders={AuthHeader: ns0:AuthHeader}) -> CreatePolicyResult: ns0:Policy
+operation GetPolicy(policyNo: xsd:string, _soapheaders={AuthHeader: ns0:AuthHeader}) -> GetPolicyResult: ns0:Policy
+operation GetQuote(age: xsd:int, days: xsd:int) -> GetQuoteResult: ns0:Quote
+operation Login(username: xsd:string, password: xsd:string) -> LoginResult: xsd:string
+operation SearchPolicies(holder: xsd:string, _soapheaders={AuthHeader: ns0:AuthHeader}) -> SearchPoliciesResult: ns0:ArrayOfPolicy
+type ArrayOfPolicy
+    Policy: Policy
+type Policy
+    PolicyNo: string
+    Holder: string
+    Age: int
+    Days: int
+    Premium: decimal
+    Currency: string
+    Status: string
+    CreatedAt: dateTime
+type Quote
+    Premium: decimal
+    Currency: string
